@@ -345,6 +345,7 @@ class Label(Widget):
                 (self.halign == 'justify' or self.strip) and
                 not self._label.text.strip()):
             self.texture_size = (0, 0)
+            self.is_shortened = False
             if mrkup:
                 self.refs, self._label._refs = {}, {}
                 self.anchors, self._label._anchors = {}, {}
@@ -373,7 +374,7 @@ class Label(Widget):
             if texture is not None:
                 self.texture = self._label.texture
                 self.texture_size = list(self.texture.size)
-            self.shortened_text = self._label.shortened_text
+            self.is_shortened = self._label.is_shortened
 
     def on_touch_down(self, touch):
         if super(Label, self).on_touch_down(touch):
@@ -737,14 +738,14 @@ class Label(Widget):
     defaults to `center`.
     '''
 
-    shortened_text = StringProperty(allownone=True)
-    '''This property holds the shortened form of :attr:`text`, if applicable.
-    A value of None means the text was rendered without shortening.
+    is_shortened = BooleanProperty(False)
+    '''This property indicates if :attr:`text` was rendered with or without
+    shortening when :attr:`shorten` is True.
 
     .. versionadded:: 1.9.2
 
-    :attr:`shortened_text` is a :class:`~kivy.properties.StringProperty` and
-    defaults to None.
+    :attr:`is_shortened` is a :class:`~kivy.properties.BooleanProperty` and
+    defaults to False.
     '''
 
     split_str = StringProperty('')
